@@ -1,7 +1,6 @@
 package csc495.potato.walk.walkpotato;
 
 import android.app.Activity;
-import android.support.v4.app.Fragment;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
@@ -16,8 +15,9 @@ import android.graphics.Shader;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -118,9 +118,9 @@ public class NavigationDrawerFragment extends Fragment implements NavigationDraw
 
     public List<NavigationItem> getMenu() {
         List<NavigationItem> items = new ArrayList<NavigationItem>();
-        items.add(new NavigationItem("item 1", getResources().getDrawable(R.drawable.ic_menu_check)));
-        items.add(new NavigationItem("item 2", getResources().getDrawable(R.drawable.ic_menu_check)));
-        items.add(new NavigationItem("item 3", getResources().getDrawable(R.drawable.ic_menu_check)));
+        items.add(new NavigationItem("Status", getResources().getDrawable(R.drawable.ic_menu_mark)));
+        items.add(new NavigationItem("Rewards", getResources().getDrawable(R.drawable.ic_menu_star)));
+        items.add(new NavigationItem("Settings", getResources().getDrawable(R.drawable.ic_menu_settings_holo_light)));
         return items;
     }
 

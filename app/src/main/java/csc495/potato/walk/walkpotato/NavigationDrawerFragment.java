@@ -119,6 +119,7 @@ public class NavigationDrawerFragment extends Fragment implements NavigationDraw
     public List<NavigationItem> getMenu() {
         List<NavigationItem> items = new ArrayList<NavigationItem>();
         items.add(new NavigationItem("Status", getResources().getDrawable(R.drawable.ic_menu_mark)));
+        items.add(new NavigationItem("Blocked Apps", getResources().getDrawable(R.drawable.ic_menu_block)));
         items.add(new NavigationItem("Rewards", getResources().getDrawable(R.drawable.ic_menu_star)));
         items.add(new NavigationItem("Settings", getResources().getDrawable(R.drawable.ic_menu_settings_holo_light)));
         return items;

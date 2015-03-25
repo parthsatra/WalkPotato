@@ -1,13 +1,18 @@
 package csc495.potato.walk.walkpotato;
 
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import org.eazegraph.lib.charts.PieChart;
+import org.eazegraph.lib.models.PieModel;
 
 
 public class MainActivity extends ActionBarActivity
@@ -18,11 +23,27 @@ public class MainActivity extends ActionBarActivity
      */
     private NavigationDrawerFragment mNavigationDrawerFragment;
     private Toolbar mToolbar;
+    private PieChart mPieChart;
+    private TextView stepsView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        int stepsTaken = 3000;
+        int goalSteps = 5000;
+
+        mPieChart = (PieChart) findViewById(R.id.graph);
+        stepsView = (TextView) findViewById(R.id.steps);
+        stepsView.setText(Integer.toString(stepsTaken));
+
+        mPieChart.addPieSlice(new PieModel("", stepsTaken, Color.parseColor("#143ACC")));
+        mPieChart.addPieSlice(new PieModel("", goalSteps, Color.parseColor("#FF3A00")));
+
+        mPieChart.startAnimation();
+
+        ((TextView) findViewById(R.id.unit)).setText(getString(R.string.steps));
+
         mToolbar = (Toolbar) findViewById(R.id.toolbar_actionbar);
         setSupportActionBar(mToolbar);
 
@@ -33,6 +54,13 @@ public class MainActivity extends ActionBarActivity
         mNavigationDrawerFragment.setup(R.id.fragment_drawer, (DrawerLayout) findViewById(R.id.drawer), mToolbar);
         // populate the navigation drawer
         mNavigationDrawerFragment.setUserData("Potato Doe", "potatodoe@doe.com", BitmapFactory.decodeResource(getResources(), R.drawable.avatar));
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        //chart.startDataAnimation();
+        mPieChart.startAnimation();
     }
 
     @Override

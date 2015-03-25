@@ -1,48 +1,31 @@
 package csc495.potato.walk.walkpotato;
 
+import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.TextView;
 import android.widget.Toast;
-
-import org.eazegraph.lib.charts.PieChart;
-import org.eazegraph.lib.models.PieModel;
 
 
 public class MainActivity extends ActionBarActivity
-        implements NavigationDrawerCallbacks {
+        implements NavigationDrawerCallbacks, BlockedAppFragment.OnFragmentInteractionListener {
 
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
      */
     private NavigationDrawerFragment mNavigationDrawerFragment;
     private Toolbar mToolbar;
-    private PieChart mPieChart;
-    private TextView stepsView;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        int stepsTaken = 3000;
-        int goalSteps = 5000;
-
-        mPieChart = (PieChart) findViewById(R.id.graph);
-        stepsView = (TextView) findViewById(R.id.steps);
-        stepsView.setText(Integer.toString(stepsTaken));
-
-        mPieChart.addPieSlice(new PieModel("", stepsTaken, Color.parseColor("#143ACC")));
-        mPieChart.addPieSlice(new PieModel("", goalSteps, Color.parseColor("#FF3A00")));
-
-        mPieChart.startAnimation();
-
-        ((TextView) findViewById(R.id.unit)).setText(getString(R.string.steps));
 
         mToolbar = (Toolbar) findViewById(R.id.toolbar_actionbar);
         setSupportActionBar(mToolbar);
@@ -54,19 +37,48 @@ public class MainActivity extends ActionBarActivity
         mNavigationDrawerFragment.setup(R.id.fragment_drawer, (DrawerLayout) findViewById(R.id.drawer), mToolbar);
         // populate the navigation drawer
         mNavigationDrawerFragment.setUserData("Potato Doe", "potatodoe@doe.com", BitmapFactory.decodeResource(getResources(), R.drawable.avatar));
+
+        Fragment fg = StepStatusFragment.newInstance();
+        getFragmentManager().beginTransaction().add(R.id.container, fg).commit();
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        //chart.startDataAnimation();
-        mPieChart.startAnimation();
     }
 
     @Override
     public void onNavigationDrawerItemSelected(int position) {
         // update the main content by replacing fragments
         Toast.makeText(this, "Menu item selected -> " + position, Toast.LENGTH_SHORT).show();
+        Fragment fragment;
+        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+
+        switch (position) {
+            case 0: //step status//
+                fragment = getFragmentManager().findFragmentById(R.id.step_status);
+                if (fragment == null) {
+                    fragment = new StepStatusFragment();
+                }
+                transaction.replace(R.id.container, fragment);
+                transaction.addToBackStack(null);
+                transaction.commit();
+                break;
+            case 1: //blocked apps
+                fragment = getFragmentManager().findFragmentById(R.id.blockedapp_list);
+                if (fragment == null) {
+                    fragment = new BlockedAppFragment();
+                }
+                transaction.replace(R.id.container, fragment);
+                transaction.addToBackStack(null);
+                transaction.commit();
+
+                break;
+            case 2: //rewards //todo
+                break;
+            case 3: //settings //todo
+                break;
+        }
     }
 
 
@@ -107,5 +119,8 @@ public class MainActivity extends ActionBarActivity
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onBlockAppFragmentInteraction(String id) {
 
+    }
 }

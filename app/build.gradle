@@ -30,4 +30,9 @@ dependencies {
     compile 'com.android.support:recyclerview-v7:21.0.3'
     compile 'com.github.blackfizz:eazegraph:1.2.5l@aar'
     compile 'com.nineoldandroids:library:2.4.0'
+    compile 'com.github.gabrielemariotti.cards:cardslib-core:2.0.1'
+    compile 'com.github.gabrielemariotti.cards:cardslib-cards:2.0.1'
+    compile 'com.github.gabrielemariotti.cards:cardslib-recyclerview:2.0.1'
+    compile 'com.github.gabrielemariotti.cards:cardslib-extra-staggeredgrid:2.0.1'
+    compile 'com.github.gabrielemariotti.cards:cardslib-extra-dragdrop:2.0.1'
 }

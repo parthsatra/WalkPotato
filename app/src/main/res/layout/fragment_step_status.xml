@@ -1,7 +1,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="csc495.potato.walk.walkpotato.StepStatusFragment"
+    tools:context="csc495.potato.walk.walkpotato.UI.Fragments.StepStatusFragment"
     android:id="@+id/step_status"
     android:background="#FFFFFF">
 
@@ -13,7 +13,7 @@
         xmlns:eaze="http://schemas.android.com/apk/res-auto"
         android:id="@+id/graph"
         android:layout_width="match_parent"
-        android:layout_height="250dp"
+        android:layout_height="300dp"
         android:layout_marginTop="100dp"
         eaze:egLegendHeight="0dp"
         eaze:egInnerPadding="75"
@@ -21,23 +21,38 @@
         eaze:egInnerPaddingColor= "#FFFFFF"
         eaze:egHighlightStrength="2"/>
 
-    <TextView
-        android:id="@+id/steps"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="175dp"
-        android:gravity="center"
-        android:textSize="45sp"
-        android:textColor="@android:color/black"/>
+        android:layout_height="200dp"
+        android:layout_marginTop="200dp"
+        android:orientation="vertical"
+        android:layout_centerHorizontal="true">
 
-    <TextView
-        android:id="@+id/unit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/steps"
-        android:layout_centerHorizontal="true"
-        android:text="@string/steps"
-        android:textColor="@android:color/black"
-        android:textSize="20sp"/>
+        <TextView
+            android:id="@+id/potatoes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/black"
+            android:gravity="center"
+            android:textSize="20sp"/>
+
+        <TextView
+            android:id="@+id/steps"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textSize="45sp"
+            android:textColor="@android:color/black"/>
+
+        <TextView
+            android:id="@+id/unit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/steps"
+            android:textColor="@android:color/black"
+            android:gravity="center"
+            android:textSize="20sp"/>
+
+    </LinearLayout>
 
 </RelativeLayout>

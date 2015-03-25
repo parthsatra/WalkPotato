@@ -15,7 +15,7 @@
 
         <!-- android:layout_marginTop="?android:attr/actionBarSize"-->
         <fragment android:id="@+id/fragment_drawer"
-            android:name="csc495.potato.walk.walkpotato.NavigationDrawerFragment"
+            android:name="csc495.potato.walk.walkpotato.UI.NavDrawer.NavigationDrawerFragment"
             android:layout_width="@dimen/navigation_drawer_width"
             android:layout_height="match_parent" android:layout_gravity="start"
             app:layout="@layout/fragment_navigation_drawer" />

@@ -1,4 +1,4 @@
-package csc495.potato.walk.walkpotato;
+package csc495.potato.walk.walkpotato.UI.Fragments;
 
 import android.app.Activity;
 import android.app.Fragment;
@@ -12,6 +12,8 @@ import android.widget.TextView;
 import org.eazegraph.lib.charts.PieChart;
 import org.eazegraph.lib.models.PieModel;
 
+import csc495.potato.walk.walkpotato.R;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link StepStatusFragment#newInstance} factory method to
@@ -20,6 +22,10 @@ import org.eazegraph.lib.models.PieModel;
 public class StepStatusFragment extends Fragment {
     private PieChart mPieChart;
     private TextView stepsView;
+    private TextView totalPotatoesView;
+
+    private final int NUM_STEPS_PER_CAL = 20;
+    private final int NUM_CALS_PER_POTATO = 138;
 
     /**
      * Use this factory method to create a new instance of
@@ -50,15 +56,21 @@ public class StepStatusFragment extends Fragment {
         // Inflate the layout for this fragment
         final View v =  inflater.inflate(R.layout.fragment_step_status, container, false);
 
-        int stepsTaken = 3000;
-        int goalSteps = 5000;
+        int stepsTaken = 15000;
+        int goalSteps = 20000;
+        int numPotatoesBurned = calculatePotatoesBurned(stepsTaken);
 
         mPieChart = (PieChart) v.findViewById(R.id.graph);
         stepsView = (TextView) v.findViewById(R.id.steps);
-        stepsView.setText(Integer.toString(stepsTaken));
+        totalPotatoesView = (TextView) v.findViewById(R.id.potatoes);
 
+        stepsView.setText(Integer.toString(stepsTaken));
+        totalPotatoesView.setText(numPotatoesBurned == 1 ? numPotatoesBurned + " potato"
+                : numPotatoesBurned + " potatoes");
+
+        mPieChart.clearChart();
         mPieChart.addPieSlice(new PieModel("", stepsTaken, Color.parseColor("#143ACC")));
-        mPieChart.addPieSlice(new PieModel("", goalSteps, Color.parseColor("#FF3A00")));
+        mPieChart.addPieSlice(new PieModel("", goalSteps - stepsTaken, Color.parseColor("#FF3A00")));
 
         mPieChart.startAnimation();
 
@@ -82,6 +94,11 @@ public class StepStatusFragment extends Fragment {
     @Override
     public void onDetach() {
         super.onDetach();
+    }
+
+    private int calculatePotatoesBurned(int stepsTaken) {
+        return (stepsTaken / NUM_STEPS_PER_CAL) / NUM_CALS_PER_POTATO;
+
     }
 
 }

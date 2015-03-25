@@ -1,4 +1,4 @@
-package csc495.potato.walk.walkpotato.dummy;
+package csc495.potato.walk.walkpotato.UI.dummy;
 
 import java.util.ArrayList;
 import java.util.HashMap;

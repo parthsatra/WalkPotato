@@ -1,4 +1,4 @@
-package csc495.potato.walk.walkpotato;
+package csc495.potato.walk.walkpotato.UI.Fragments;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -13,7 +13,8 @@ import android.widget.ListAdapter;
 import android.widget.TextView;
 
 
-import csc495.potato.walk.walkpotato.dummy.DummyContent;
+import csc495.potato.walk.walkpotato.R;
+import csc495.potato.walk.walkpotato.UI.dummy.DummyContent;
 
 /**
  * A fragment representing a list of Items.

@@ -10,7 +10,8 @@
 
     <color name="myPrimaryColor">#6FBB21</color>
     <color name="myPrimaryDarkColor">#539510</color>
-    <color name="myAccentColor">#18876B</color>
+    <color name="mySecondaryColor">#D04E25</color>
+    <color name="myAccentColor">#7E1A88</color>
     <color name="myDrawerBackground">#FFF</color>
     <color name="myWindowBackground">#FFF</color>
     <color name="myTextPrimaryColor">#212121</color>

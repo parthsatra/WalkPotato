@@ -35,4 +35,5 @@ dependencies {
     compile 'com.github.gabrielemariotti.cards:cardslib-recyclerview:2.0.1'
     compile 'com.github.gabrielemariotti.cards:cardslib-extra-staggeredgrid:2.0.1'
     compile 'com.github.gabrielemariotti.cards:cardslib-extra-dragdrop:2.0.1'
+    compile 'com.shamanland:fab:0.0.8'
 }

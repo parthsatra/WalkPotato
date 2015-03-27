@@ -4,12 +4,35 @@
     android:layout_height="match_parent"
     tools:context="csc495.potato.walk.walkpotato.UI.Fragments.BlockedAppFragment"
     android:id="@+id/blockedapp_list"
-    android:background="#FFFFFF">
+    android:background="#FFFFFF" >
 
     <ListView android:id="@android:id/list" android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:stackFromBottom="false"
+        android:divider="@color/mySecondaryColor"
+        android:dividerHeight="1.0sp"
+        android:clickable="false"
+        android:headerDividersEnabled="false"
+        android:footerDividersEnabled="false" />
 
-    <TextView android:id="@android:id/empty" android:layout_width="match_parent"
-        android:layout_height="match_parent" android:gravity="center" />
+    <TextView android:id="@android:id/empty"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:textColor="@android:color/black" />
+
+    <ImageButton
+        android:id="@+id/add_button"
+        android:tint="@android:color/white"
+        android:background="@drawable/oval_ripple"
+        android:elevation="@dimen/elevation_high"
+        android:layout_width="@dimen/round_button_diameter"
+        android:layout_height="@dimen/round_button_diameter"
+        android:layout_gravity="end|bottom"
+        android:layout_marginBottom="@dimen/add_button_margin"
+        android:layout_marginEnd="@dimen/add_button_margin"
+        android:onClick="showDialog"
+        android:src="@android:drawable/ic_input_add"/>
+
 
 </FrameLayout>

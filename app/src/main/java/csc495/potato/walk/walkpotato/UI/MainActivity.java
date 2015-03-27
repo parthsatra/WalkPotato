@@ -1,7 +1,9 @@
 package csc495.potato.walk.walkpotato.UI;
 
 import android.app.Fragment;
+import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.pm.PackageManager;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
@@ -9,9 +11,11 @@ import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
 import csc495.potato.walk.walkpotato.R;
+import csc495.potato.walk.walkpotato.UI.Dialogs.AppSelectDialog;
 import csc495.potato.walk.walkpotato.UI.Fragments.BlockedAppFragment;
 import csc495.potato.walk.walkpotato.UI.Fragments.StepStatusFragment;
 import csc495.potato.walk.walkpotato.UI.NavDrawer.NavigationDrawerCallbacks;
@@ -26,12 +30,15 @@ public class MainActivity extends ActionBarActivity
      */
     private NavigationDrawerFragment mNavigationDrawerFragment;
     private Toolbar mToolbar;
+    private PackageManager packageManager;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        packageManager = getPackageManager();
 
         mToolbar = (Toolbar) findViewById(R.id.toolbar_actionbar);
         setSupportActionBar(mToolbar);
@@ -51,6 +58,7 @@ public class MainActivity extends ActionBarActivity
     @Override
     public void onResume() {
         super.onResume();
+        packageManager = getPackageManager();
     }
 
     @Override
@@ -73,7 +81,7 @@ public class MainActivity extends ActionBarActivity
             case 1: //blocked apps
                 fragment = getFragmentManager().findFragmentById(R.id.blockedapp_list);
                 if (fragment == null) {
-                    fragment = new BlockedAppFragment();
+                    fragment = new BlockedAppFragment(getApplicationContext());
                 }
                 transaction.replace(R.id.container, fragment);
                 transaction.addToBackStack(null);
@@ -127,6 +135,15 @@ public class MainActivity extends ActionBarActivity
 
     @Override
     public void onBlockAppFragmentInteraction(String id) {
+
+    }
+
+    public void showDialog(View view) {
+
+        FragmentManager manager = getFragmentManager();
+
+        AppSelectDialog dialog = new AppSelectDialog(getApplicationContext());
+        dialog.show(manager, "dialog");
 
     }
 }

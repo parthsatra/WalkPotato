@@ -19,7 +19,7 @@
         eaze:egInnerPadding="75"
         eaze:egInnerPaddingOutline="4.0"
         eaze:egInnerPaddingColor= "#FFFFFF"
-        eaze:egHighlightStrength="2"/>
+        eaze:egHighlightStrength="1"/>
 
     <LinearLayout
         android:layout_width="match_parent"

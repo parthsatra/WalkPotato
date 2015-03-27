@@ -3,6 +3,7 @@ package csc495.potato.walk.walkpotato.UI.Fragments;
 import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
+import android.content.pm.ApplicationInfo;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,7 +19,6 @@ import java.util.ArrayList;
 
 import csc495.potato.walk.walkpotato.R;
 import csc495.potato.walk.walkpotato.UI.Adapters.BlockedAppsAdapter;
-import csc495.potato.walk.walkpotato.UI.Models.BlockedApp;
 
 /**
  * A fragment representing a list of Items.
@@ -40,7 +40,7 @@ public class BlockedAppFragment extends Fragment implements AbsListView.OnItemCl
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    private ArrayList<BlockedApp> blockedAppList;
+    private ArrayList<ApplicationInfo> blockedAppList;
 
     private OnFragmentInteractionListener mListener;
 
@@ -86,10 +86,7 @@ public class BlockedAppFragment extends Fragment implements AbsListView.OnItemCl
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
 
-        blockedAppList = new ArrayList<BlockedApp>();
-        blockedAppList.add(new BlockedApp("Facebook", "app.Facebook", getResources().getDrawable(R.drawable.ic_menu_mark), 12l));
-        blockedAppList.add(new BlockedApp("Reddit Sync", "app.sync.reddit", getResources().getDrawable(R.drawable.ic_menu_mark), 13l));
-        blockedAppList.add(new BlockedApp("Hacker News", "app.news.hacker", getResources().getDrawable(R.drawable.ic_menu_mark), 14l));
+        blockedAppList = new ArrayList<ApplicationInfo>();
 
 
         // TODO: Change Adapters to display your content
@@ -134,7 +131,7 @@ public class BlockedAppFragment extends Fragment implements AbsListView.OnItemCl
         if (null != mListener) {
             // Notify the active callbacks interface (the activity, if the
             // fragment is attached to one) that an item has been selected.
-            mListener.onBlockAppFragmentInteraction(blockedAppList.get(position).getAppName());
+            mListener.onBlockAppFragmentInteraction(blockedAppList.get(position).toString());
         }
     }
 

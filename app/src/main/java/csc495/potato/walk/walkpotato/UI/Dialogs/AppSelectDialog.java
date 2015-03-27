@@ -73,10 +73,9 @@ public class AppSelectDialog extends DialogFragment implements
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position,
                             long id) {
-
         dismiss();
-        Toast.makeText(getActivity(), appList.get(position).toString(), Toast.LENGTH_SHORT)
-                .show();
+        Toast.makeText(getActivity(), appList.get(position).loadLabel(context.getPackageManager()),
+                Toast.LENGTH_SHORT).show();
     }
 
     private List<ApplicationInfo> checkForLaunchIntent(List<ApplicationInfo> list) {

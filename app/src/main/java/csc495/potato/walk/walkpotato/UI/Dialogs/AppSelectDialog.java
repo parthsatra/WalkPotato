@@ -47,8 +47,7 @@ public class AppSelectDialog extends DialogFragment implements
         appListView = (ListView) view.findViewById(R.id.list);
 
         if (context != null) {
-            PackageManager packageManager = context.getPackageManager();
-            appList = packageManager.getInstalledApplications(PackageManager.GET_META_DATA);
+            new LoadApplications().execute();
         }
 
         getDialog().getWindow().requestFeature(Window.FEATURE_NO_TITLE);
@@ -98,7 +97,14 @@ public class AppSelectDialog extends DialogFragment implements
 
         @Override
         protected Void doInBackground(Void... params) {
-            appList = checkForLaunchIntent(context.getPackageManager().getInstalledApplications(PackageManager.GET_META_DATA));
+            List<ApplicationInfo> allAppList = checkForLaunchIntent(context.getPackageManager().getInstalledApplications(PackageManager.GET_META_DATA));
+
+            for (ApplicationInfo app : allAppList) {
+                if(isUserApp(app)) {
+                    appList.add(app);
+                }
+            }
+
             appAdapter = new ApplicationAdapter(getActivity(),
                     R.layout.app_list_item, appList);
 
@@ -127,6 +133,11 @@ public class AppSelectDialog extends DialogFragment implements
         @Override
         protected void onProgressUpdate(Void... values) {
             super.onProgressUpdate(values);
+        }
+
+        private boolean isUserApp(ApplicationInfo ai) {
+            int mask = ApplicationInfo.FLAG_SYSTEM | ApplicationInfo.FLAG_UPDATED_SYSTEM_APP;
+            return (ai.flags & mask) == 0;
         }
     }
 }

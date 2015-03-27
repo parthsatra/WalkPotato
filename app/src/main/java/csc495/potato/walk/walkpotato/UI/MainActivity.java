@@ -1,7 +1,6 @@
 package csc495.potato.walk.walkpotato.UI;
 
 import android.app.Fragment;
-import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.pm.PackageManager;
 import android.graphics.BitmapFactory;
@@ -11,11 +10,9 @@ import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Toast;
 
 import csc495.potato.walk.walkpotato.R;
-import csc495.potato.walk.walkpotato.UI.Dialogs.AppSelectDialog;
 import csc495.potato.walk.walkpotato.UI.Fragments.BlockedAppFragment;
 import csc495.potato.walk.walkpotato.UI.Fragments.StepStatusFragment;
 import csc495.potato.walk.walkpotato.UI.NavDrawer.NavigationDrawerCallbacks;
@@ -135,15 +132,6 @@ public class MainActivity extends ActionBarActivity
 
     @Override
     public void onBlockAppFragmentInteraction(String id) {
-
-    }
-
-    public void showDialog(View view) {
-
-        FragmentManager manager = getFragmentManager();
-
-        AppSelectDialog dialog = new AppSelectDialog(getApplicationContext());
-        dialog.show(manager, "dialog");
 
     }
 }

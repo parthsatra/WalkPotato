@@ -2,6 +2,7 @@ package csc495.potato.walk.walkpotato.UI.Fragments;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.app.FragmentManager;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.os.Bundle;
@@ -19,6 +20,8 @@ import java.util.ArrayList;
 
 import csc495.potato.walk.walkpotato.R;
 import csc495.potato.walk.walkpotato.UI.Adapters.BlockedAppsAdapter;
+import csc495.potato.walk.walkpotato.UI.Dialogs.AppSelectDialog;
+import csc495.potato.walk.walkpotato.UI.Widgets.FixButtonFloat;
 
 /**
  * A fragment representing a list of Items.
@@ -29,17 +32,8 @@ import csc495.potato.walk.walkpotato.UI.Adapters.BlockedAppsAdapter;
  * Activities containing this fragment MUST implement the {@link OnFragmentInteractionListener}
  * interface.
  */
-public class BlockedAppFragment extends Fragment implements AbsListView.OnItemClickListener {
+public class BlockedAppFragment extends Fragment implements AbsListView.OnItemClickListener, AppSelectDialog.OnAppSelectListener {
     private Context context;
-
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
     private ArrayList<ApplicationInfo> blockedAppList;
 
     private OnFragmentInteractionListener mListener;
@@ -56,13 +50,8 @@ public class BlockedAppFragment extends Fragment implements AbsListView.OnItemCl
      */
     private BlockedAppsAdapter mAdapter;
 
-    // TODO: Rename and change types of parameters
-    public static BlockedAppFragment newInstance(String param1, String param2) {
+    public static BlockedAppFragment newInstance() {
         BlockedAppFragment fragment = new BlockedAppFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
         return fragment;
     }
 
@@ -80,16 +69,7 @@ public class BlockedAppFragment extends Fragment implements AbsListView.OnItemCl
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-
         blockedAppList = new ArrayList<ApplicationInfo>();
-
-
-        // TODO: Change Adapters to display your content
         mAdapter = new BlockedAppsAdapter(blockedAppList, getActivity());
     }
 
@@ -101,6 +81,13 @@ public class BlockedAppFragment extends Fragment implements AbsListView.OnItemCl
         // Set the adapter
         mListView = (AbsListView) view.findViewById(android.R.id.list);
         ((AdapterView<ListAdapter>) mListView).setAdapter(mAdapter);
+
+        FixButtonFloat appAddBtn = (FixButtonFloat) view.findViewById(android.R.id.button1);
+        appAddBtn.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                showDialog();
+            }
+        });
 
         // Set OnItemClickListener so we can be notified on item clicks
         mListView.setOnItemClickListener(this);
@@ -146,6 +133,18 @@ public class BlockedAppFragment extends Fragment implements AbsListView.OnItemCl
         if (emptyView instanceof TextView) {
             ((TextView) emptyView).setText(emptyText);
         }
+    }
+
+    public void showDialog() {
+        FragmentManager manager = getFragmentManager();
+        AppSelectDialog dialog = new AppSelectDialog(context);
+        dialog.setTargetFragment(this, 0);
+        dialog.show(manager, "dialog");
+    }
+
+    @Override
+    public void onAppSelectListener(ApplicationInfo appInfo) {
+        mAdapter.addItem(appInfo);
     }
 
     /**

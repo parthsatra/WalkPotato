@@ -32,7 +32,6 @@
         android:layout_marginEnd="@dimen/add_button_margin"
         android:layout_marginRight="@dimen/add_button_margin"
         android:background="@color/myAccentColor"
-        android:onClick="showDialog"
         materialdesign:animate="false"
         materialdesign:iconDrawable="@drawable/ic_input_add" />
 

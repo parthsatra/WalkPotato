@@ -29,10 +29,16 @@ import csc495.potato.walk.walkpotato.UI.Adapters.ApplicationAdapter;
  */
 public class AppSelectDialog extends DialogFragment implements
         OnItemClickListener {
+
     private ListView appListView;
     private List<ApplicationInfo> appList;
     private ApplicationAdapter appAdapter;
     private Context context;
+    private OnAppSelectListener callback;
+
+    public interface OnAppSelectListener {
+        public void onAppSelectListener(ApplicationInfo appInfo);
+    }
 
     public AppSelectDialog() {}
 
@@ -41,17 +47,27 @@ public class AppSelectDialog extends DialogFragment implements
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-
-        View view = inflater.inflate(R.layout.fragment_select_app, null, false);
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         appList = new ArrayList<ApplicationInfo>();
-        appListView = (ListView) view.findViewById(R.id.list);
 
         if (context != null) {
             new LoadApplications().execute();
         }
 
+        try {
+            callback = (OnAppSelectListener) getTargetFragment();
+        } catch (ClassCastException e) {
+            throw new ClassCastException("Calling Fragment must implement OnAppSelectListener");
+        }
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+
+        View view = inflater.inflate(R.layout.fragment_select_app, null, false);
+        appListView = (ListView) view.findViewById(R.id.list);
         getDialog().getWindow().requestFeature(Window.FEATURE_NO_TITLE);
         return view;
     }
@@ -74,6 +90,7 @@ public class AppSelectDialog extends DialogFragment implements
     public void onItemClick(AdapterView<?> parent, View view, int position,
                             long id) {
         dismiss();
+        callback.onAppSelectListener(appList.get(position));
         Toast.makeText(getActivity(), appList.get(position).loadLabel(context.getPackageManager()),
                 Toast.LENGTH_SHORT).show();
     }

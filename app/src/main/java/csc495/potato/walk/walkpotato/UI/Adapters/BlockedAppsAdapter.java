@@ -5,10 +5,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.TextView;
+
+import com.gc.materialdesign.views.ButtonFloatSmall;
 
 import java.util.ArrayList;
 
@@ -61,7 +62,7 @@ public class BlockedAppsAdapter extends BaseAdapter implements ListAdapter {
         listItemText.setText(list.get(position).getAppName());
 
         //Handle buttons and add onClickListeners
-        ImageButton deleteBtn = (ImageButton) view.findViewById(R.id.remove_app_btn);
+        ButtonFloatSmall deleteBtn = (ButtonFloatSmall) view.findViewById(R.id.remove_app_btn);
 
         deleteBtn.setOnClickListener(new View.OnClickListener(){
             @Override

@@ -2,7 +2,6 @@ package csc495.potato.walk.walkpotato.UI.Fragments;
 
 import android.app.Activity;
 import android.app.Fragment;
-import android.app.FragmentManager;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,15 +9,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
-import android.widget.ImageButton;
 import android.widget.ListAdapter;
 import android.widget.TextView;
+
+import com.gc.materialdesign.views.ButtonFloat;
 
 import java.util.ArrayList;
 
 import csc495.potato.walk.walkpotato.R;
 import csc495.potato.walk.walkpotato.UI.Adapters.BlockedAppsAdapter;
-import csc495.potato.walk.walkpotato.UI.Dialogs.AppSelectDialog;
 import csc495.potato.walk.walkpotato.UI.Models.BlockedApp;
 
 /**
@@ -49,7 +48,7 @@ public class BlockedAppFragment extends Fragment implements AbsListView.OnItemCl
      * The fragment's ListView/GridView.
      */
     private AbsListView mListView;
-    private ImageButton addButton;
+    private ButtonFloat addButton;
 
     /**
      * The Adapters which will be used to populate the ListView/GridView with

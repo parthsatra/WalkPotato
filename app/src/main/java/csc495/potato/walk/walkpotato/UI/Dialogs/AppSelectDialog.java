@@ -1,10 +1,10 @@
 package csc495.potato.walk.walkpotato.UI.Dialogs;
 
 import android.app.DialogFragment;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -15,6 +15,8 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.Toast;
+
+import com.gc.materialdesign.widgets.ProgressDialog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -125,8 +127,9 @@ public class AppSelectDialog extends DialogFragment implements
 
         @Override
         protected void onPreExecute() {
-            progress = ProgressDialog.show(getActivity(), null,
-                    "Loading application info...");
+            progress = new ProgressDialog(getActivity(), "Loading app info...",
+                    Color.parseColor("#F38630"));
+            progress.show();
             super.onPreExecute();
         }
 

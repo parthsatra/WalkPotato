@@ -33,7 +33,6 @@ public class StepStatusFragment extends Fragment {
      *
      * @return A new instance of fragment StepStatusFragment.
      */
-    // TODO: Rename and change types and number of parameters
     public static StepStatusFragment newInstance() {
         StepStatusFragment fragment = new StepStatusFragment();
         Bundle args = new Bundle();

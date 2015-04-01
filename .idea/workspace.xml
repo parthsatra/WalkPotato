@@ -110,8 +110,8 @@
   <component name="Git.Settings">
     <option name="PREVIOUS_COMMIT_AUTHORS">
       <list>
-        <option value="asriram4@ncsu.edu" />
         <option value="kmwarren@ncsu.edu" />
+        <option value="asriram4@ncsu.edu" />
       </list>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -1753,7 +1753,11 @@
       <created>1427482337867</created>
       <updated>1427482337867</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="Added ability to add apps from dialog and formatted them correctly. Might make the icons smaller since they're huge.&#10;">
+      <created>1427917994211</created>
+      <updated>1427917994211</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TodoView" selected-index="0">

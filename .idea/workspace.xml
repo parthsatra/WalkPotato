@@ -18,35 +18,7 @@
     <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="app: csc495.potato.walk.walkpotato" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5b369292-cdba-4fae-9316-c898ef149a6e" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/java/csc495/potato/walk/walkpotato/UI/backgroundtasks/LogReaderService.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/res/layout/block_view.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/res/values-w820dp/dimens.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/gson_2_0_2.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/gson_2_3_1.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/res/menu/menu_blocked_screen.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/.name" afterPath="$PROJECT_DIR$/.idea/.name" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/csc495/potato/walk/walkpotato/UI/Fragments/BlockedAppFragment.java" afterPath="$PROJECT_DIR$/app/src/main/java/csc495/potato/walk/walkpotato/UI/Fragments/BlockedAppFragment.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/csc495/potato/walk/walkpotato/UI/Adapters/BlockedAppsAdapter.java" afterPath="$PROJECT_DIR$/app/src/main/java/csc495/potato/walk/walkpotato/UI/Adapters/BlockedAppsAdapter.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/csc495/potato/walk/walkpotato/UI/MainActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/csc495/potato/walk/walkpotato/UI/MainActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/WalkPotato.iml" afterPath="$PROJECT_DIR$/WalkPotato.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/app.iml" afterPath="$PROJECT_DIR$/app/app.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build.gradle" afterPath="$PROJECT_DIR$/app/build.gradle" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/cardslib_cards_2_0_1.xml" afterPath="$PROJECT_DIR$/.idea/libraries/cardslib_cards_2_0_1.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/cardslib_core_2_0_1.xml" afterPath="$PROJECT_DIR$/.idea/libraries/cardslib_core_2_0_1.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/cardslib_extra_dragdrop_2_0_1.xml" afterPath="$PROJECT_DIR$/.idea/libraries/cardslib_extra_dragdrop_2_0_1.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/cardslib_extra_staggeredgrid_2_0_1.xml" afterPath="$PROJECT_DIR$/.idea/libraries/cardslib_extra_staggeredgrid_2_0_1.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/cardslib_recyclerview_2_0_1.xml" afterPath="$PROJECT_DIR$/.idea/libraries/cardslib_recyclerview_2_0_1.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/cardview_v7_21_0_0.xml" afterPath="$PROJECT_DIR$/.idea/libraries/cardview_v7_21_0_0.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/library_1_0_5.xml" afterPath="$PROJECT_DIR$/.idea/libraries/library_1_0_5.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/recyclerview_v7_21_0_3.xml" afterPath="$PROJECT_DIR$/.idea/libraries/recyclerview_v7_21_0_3.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" afterPath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/support_annotations_21_0_3.xml" afterPath="$PROJECT_DIR$/.idea/libraries/support_annotations_21_0_3.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/support_v4_21_0_3.xml" afterPath="$PROJECT_DIR$/.idea/libraries/support_v4_21_0_3.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-    </list>
+    <list default="true" id="5b369292-cdba-4fae-9316-c898ef149a6e" name="Default" comment="" />
     <ignored path="Walk Potato.iws" />
     <ignored path=".idea/workspace.xml" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -144,8 +116,8 @@
   <component name="Git.Settings">
     <option name="PREVIOUS_COMMIT_AUTHORS">
       <list>
-        <option value="asriram4@ncsu.edu" />
         <option value="kmwarren@ncsu.edu" />
+        <option value="asriram4@ncsu.edu" />
       </list>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -1787,7 +1759,11 @@
       <created>1427482337867</created>
       <updated>1427482337867</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="Added ability to add apps from dialog and formatted them correctly. Might make the icons smaller since they're huge.&#10;">
+      <created>1427917994211</created>
+      <updated>1427917994211</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TodoView" selected-index="0">

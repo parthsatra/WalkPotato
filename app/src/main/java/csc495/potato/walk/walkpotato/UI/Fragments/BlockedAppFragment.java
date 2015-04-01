@@ -4,8 +4,10 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.pm.ApplicationInfo;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,8 +17,11 @@ import android.widget.ListAdapter;
 import android.widget.TextView;
 
 import com.gc.materialdesign.views.ButtonFloat;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 import csc495.potato.walk.walkpotato.R;
 import csc495.potato.walk.walkpotato.UI.Adapters.BlockedAppsAdapter;
@@ -70,6 +75,19 @@ public class BlockedAppFragment extends Fragment implements AbsListView.OnItemCl
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         blockedAppList = new ArrayList<ApplicationInfo>();
+
+        SharedPreferences blockedApps = this.getActivity().getSharedPreferences("blocked_apps", Context.MODE_PRIVATE);
+        Set<String> blockedAppSet = blockedApps.getStringSet("app_list", new HashSet<String>());
+
+        for (String packageName : blockedAppSet) {
+            try {
+                ApplicationInfo app = this.getActivity().getPackageManager().getApplicationInfo(packageName, 0);
+                blockedAppList.add(app);
+            } catch (Exception e) {
+                Log.e("Error", "Couldn't find package with name : " + packageName);
+            }
+        }
+
         mAdapter = new BlockedAppsAdapter(blockedAppList, getActivity());
     }
 
@@ -91,7 +109,6 @@ public class BlockedAppFragment extends Fragment implements AbsListView.OnItemCl
 
         // Set OnItemClickListener so we can be notified on item clicks
         mListView.setOnItemClickListener(this);
-
         return view;
     }
 
@@ -144,6 +161,15 @@ public class BlockedAppFragment extends Fragment implements AbsListView.OnItemCl
 
     @Override
     public void onAppSelectListener(ApplicationInfo appInfo) {
+
+        Gson gson = new Gson();
+
+        SharedPreferences blockedApps = this.getActivity().getSharedPreferences("blocked_apps", Context.MODE_PRIVATE);
+        Set<String> blockedAppSet = blockedApps.getStringSet("app_list", new HashSet<String>());
+        SharedPreferences.Editor editor = blockedApps.edit();
+        blockedAppSet.add(appInfo.packageName);
+        editor.putStringSet("app_list", blockedAppSet);
+        editor.apply();
         mAdapter.addItem(appInfo);
     }
 

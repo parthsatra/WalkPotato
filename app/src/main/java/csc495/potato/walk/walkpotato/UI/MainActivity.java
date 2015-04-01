@@ -2,6 +2,7 @@ package csc495.potato.walk.walkpotato.UI;
 
 import android.app.Fragment;
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -10,13 +11,13 @@ import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import csc495.potato.walk.walkpotato.R;
 import csc495.potato.walk.walkpotato.UI.Fragments.BlockedAppFragment;
 import csc495.potato.walk.walkpotato.UI.Fragments.StepStatusFragment;
 import csc495.potato.walk.walkpotato.UI.NavDrawer.NavigationDrawerCallbacks;
 import csc495.potato.walk.walkpotato.UI.NavDrawer.NavigationDrawerFragment;
+import csc495.potato.walk.walkpotato.UI.backgroundtasks.LogReaderService;
 
 
 public class MainActivity extends ActionBarActivity
@@ -50,6 +51,11 @@ public class MainActivity extends ActionBarActivity
 
         Fragment fg = StepStatusFragment.newInstance();
         getFragmentManager().beginTransaction().add(R.id.container, fg).commit();
+
+        Intent intent = new Intent(this, LogReaderService.class);
+        startService(intent);
+        mNavigationDrawerFragment.closeDrawer();
+
     }
 
     @Override
@@ -61,7 +67,6 @@ public class MainActivity extends ActionBarActivity
     @Override
     public void onNavigationDrawerItemSelected(int position) {
         // update the main content by replacing fragments
-        Toast.makeText(this, "Menu item selected -> " + position, Toast.LENGTH_SHORT).show();
         Fragment fragment;
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
 

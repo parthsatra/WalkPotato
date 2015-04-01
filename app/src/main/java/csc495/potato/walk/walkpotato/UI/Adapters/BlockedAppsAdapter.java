@@ -1,6 +1,7 @@
 package csc495.potato.walk.walkpotato.UI.Adapters;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.view.LayoutInflater;
@@ -14,6 +15,8 @@ import android.widget.TextView;
 import com.gc.materialdesign.views.ButtonFloatSmall;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 import csc495.potato.walk.walkpotato.R;
 
@@ -73,6 +76,12 @@ public class BlockedAppsAdapter extends BaseAdapter implements ListAdapter {
             @Override
             public void onClick(View v) {
                 //do something
+                SharedPreferences blockedApps = context.getSharedPreferences("blocked_apps", Context.MODE_PRIVATE);
+                Set<String> blockedAppSet = blockedApps.getStringSet("app_list", new HashSet<String>());
+                SharedPreferences.Editor editor = blockedApps.edit();
+                blockedAppSet.remove(list.get(position).packageName);
+                editor.putStringSet("app_list", blockedAppSet);
+                editor.apply();
                 list.remove(position); //or some other task
                 notifyDataSetChanged();
             }

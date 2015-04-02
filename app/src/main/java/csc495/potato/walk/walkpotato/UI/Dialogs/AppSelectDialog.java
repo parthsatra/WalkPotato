@@ -117,7 +117,7 @@ public class AppSelectDialog extends DialogFragment implements
             List<ApplicationInfo> allAppList = checkForLaunchIntent(context.getPackageManager().getInstalledApplications(PackageManager.GET_META_DATA));
 
             for (ApplicationInfo app : allAppList) {
-                if(isUserApp(app)) {
+                if(isUserApp(app) && !app.packageName.contains("walkpotato")) {
                     appList.add(app);
                 }
             }

@@ -75,13 +75,12 @@ public class BlockedAppsAdapter extends BaseAdapter implements ListAdapter {
         deleteBtn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                //do something
                 SharedPreferences blockedApps = context.getSharedPreferences("blocked_apps", Context.MODE_PRIVATE);
                 Set<String> blockedAppSet = blockedApps.getStringSet("app_list", new HashSet<String>());
                 SharedPreferences.Editor editor = blockedApps.edit();
                 blockedAppSet.remove(list.get(position).packageName);
                 editor.putStringSet("app_list", blockedAppSet);
-                editor.apply();
+                editor.commit();
                 list.remove(position); //or some other task
                 notifyDataSetChanged();
             }

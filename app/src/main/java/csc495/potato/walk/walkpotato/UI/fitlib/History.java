@@ -20,9 +20,7 @@ import java.util.concurrent.TimeUnit;
 
 import csc495.potato.walk.walkpotato.UI.fitlib.common.Display;
 
-/**
- * Created by Constantine Mars on 1/19/2015.
- */
+
 public class History {
     private GoogleApiClient client;
     private Display display;

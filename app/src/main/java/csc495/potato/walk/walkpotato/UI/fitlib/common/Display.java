@@ -2,9 +2,7 @@ package csc495.potato.walk.walkpotato.UI.fitlib.common;
 
 import android.util.Log;
 
-/**
- * Created by Constantine Mars on 1/19/2015.
- */
+
 public abstract class Display {
     private String tag;
 

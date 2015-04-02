@@ -11,9 +11,7 @@ import com.google.android.gms.fitness.result.ListSubscriptionsResult;
 
 import csc495.potato.walk.walkpotato.UI.fitlib.common.Display;
 
-/**
- * Created by mars on 1/19/15.
- */
+
 public class Recording {
     private GoogleApiClient client;
     private Display display;

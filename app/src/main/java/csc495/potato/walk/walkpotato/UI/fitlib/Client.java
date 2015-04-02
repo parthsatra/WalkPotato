@@ -14,11 +14,7 @@ import com.google.android.gms.fitness.Fitness;
 
 import csc495.potato.walk.walkpotato.UI.fitlib.common.Display;
 
-/**
- * Created by Constantine Mars on 1/19/2015.
- *
- * Wrapper for GoogleApiClient that provides clear interface for Fit API operations
- */
+
 public class Client {
     private static final int REQUEST_OAUTH = 1;
 

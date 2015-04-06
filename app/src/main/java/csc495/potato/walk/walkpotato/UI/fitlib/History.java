@@ -1,5 +1,10 @@
 package csc495.potato.walk.walkpotato.UI.fitlib;
 
+import android.app.IntentService;
+import android.content.Intent;
+import android.support.v4.content.LocalBroadcastManager;
+import android.util.Log;
+
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.fitness.Fitness;
@@ -21,13 +26,30 @@ import java.util.concurrent.TimeUnit;
 import csc495.potato.walk.walkpotato.UI.fitlib.common.Display;
 
 
-public class History {
-    private GoogleApiClient client;
-    private Display display;
+public class History extends IntentService{
+    private static GoogleApiClient client;
+    private static final Display display = new Display(History.class.getName()) {
+        @Override
+        public void show(String msg) {
+            log(msg);
 
-    public History(GoogleApiClient client, Display display) {
-        this.client = client;
-        this.display = display;
+            //add(FitPagerAdapter.FragmentIndex.HISTORY, msg);
+//                                InMemoryLog.getInstance().add(FitPagerAdapter.FragmentIndex.HISTORY, msg);
+        }
+    };
+    private static int stepsTakenToday=0;
+    public static final String SERVICE_REQUEST_TYPE = "requestType";
+    public static final String HISTORY_INTENT = "fitHistory";
+    public static final String HISTORY_EXTRA_STEPS_TODAY = "stepsToday";
+    public static final int TYPE_GET_STEP_TODAY_DATA = 1;
+    public static final int TYPE_REQUEST_CONNECTION = 2;
+    public static final String FIT_NOTIFY_INTENT = "fitStatusUpdateIntent";
+    public static final String FIT_EXTRA_CONNECTION_MESSAGE = "fitFirstConnection";
+    public static final String FIT_EXTRA_NOTIFY_FAILED_STATUS_CODE = "fitExtraFailedStatusCode";
+
+    public History()
+    {
+        super("HistoryService");
     }
 
     public void readWeekBefore(Date date) {
@@ -40,9 +62,20 @@ public class History {
 
         read(startTime, endTime);
     }
+    public int currentDay(Date date) {
+        Calendar cal = Calendar.getInstance();
+//        Date now = new Date();
+        cal.setTime(date);
+        long endTime = cal.getTimeInMillis();
+        //cal.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY);
+        cal.set(Calendar.HOUR_OF_DAY, 0);
+        cal.set(Calendar.MINUTE, 0);
+        cal.set(Calendar.SECOND, 0);
+        long startTime = cal.getTimeInMillis();
 
-    public void read(long start, long end) {
-
+        return read(startTime, endTime);
+    }
+    public int read(long start, long end) {
         final DateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");// SimpleDateFormat.getDateInstance();
         display.show("history reading range: " + dateFormat.format(start) + " - " + dateFormat.format(end));
 
@@ -53,6 +86,7 @@ public class History {
                 .build();
 
         Fitness.HistoryApi.readData(client, readRequest).setResultCallback(new ResultCallback<DataReadResult>() {
+
             @Override
             public void onResult(DataReadResult dataReadResult) {
                 if (dataReadResult.getBuckets().size() > 0) {
@@ -62,9 +96,12 @@ public class History {
                         List<DataSet> dataSets = bucket.getDataSets();
                         for (DataSet dataSet : dataSets) {
                             display.show("dataSet.dataType: " + dataSet.getDataType().getName());
-
+                            History.stepsTakenToday=0;
                             for (DataPoint dp : dataSet.getDataPoints()) {
-                                describeDataPoint(dp, dateFormat);
+                                for(Field field : dp.getDataType().getFields()) {
+                                    History.stepsTakenToday+= dp.getValue(field).asInt();
+                                    Log.d("History",dp.getValue(field).asInt()+"" );
+                                }
                             }
                         }
                     }
@@ -74,26 +111,33 @@ public class History {
                         display.show("dataType: " + dataSet.getDataType().getName());
 
                         for (DataPoint dp : dataSet.getDataPoints()) {
-                            describeDataPoint(dp, dateFormat);
+                            for(Field field : dp.getDataType().getFields()) {
+                                History.stepsTakenToday+= dp.getValue(field).asInt();
+                            }
                         }
                     }
                 }
 
             }
         });
+        return History.stepsTakenToday;
     }
 
-    public void describeDataPoint(DataPoint dp, DateFormat dateFormat) {
-        String msg = "dataPoint: "
-                + "type: " + dp.getDataType().getName() +"\n"
-                + ", range: [" + dateFormat.format(dp.getStartTime(TimeUnit.MILLISECONDS)) + "-" + dateFormat.format(dp.getEndTime(TimeUnit.MILLISECONDS)) + "]\n"
-                + ", fields: [";
+    @Override
+    protected void onHandleIntent(Intent intent) {
+        Log.d("","In history dont think the service is working");
+        int type = intent.getIntExtra(SERVICE_REQUEST_TYPE,-1);
+        if(type==TYPE_GET_STEP_TODAY_DATA){
+            int steps = currentDay(new Date());
+            Intent intent1 = new Intent(HISTORY_INTENT);
+            // You can also include some extra data.
+            intent1.putExtra(HISTORY_EXTRA_STEPS_TODAY, steps);
 
-        for(Field field : dp.getDataType().getFields()) {
-            msg += field.getName() + "=" + dp.getValue(field) + " ";
+            LocalBroadcastManager.getInstance(this).sendBroadcast(intent1);
         }
+    }
 
-        msg += "]";
-        display.show(msg);
+    public static void setClient(GoogleApiClient client) {
+        History.client = client;
     }
 }

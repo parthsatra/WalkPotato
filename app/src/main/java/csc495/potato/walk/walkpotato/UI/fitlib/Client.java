@@ -60,21 +60,19 @@ public class Client {
                         new GoogleApiClient.OnConnectionFailedListener() {
                             // Called whenever the API client fails to connect.
                             @Override
-                            public void onConnectionFailed(ConnectionResult result) {
-                                display.log("Connection failed. Cause: " + result.toString());
-                                if (!result.hasResolution()) {
-                                    GooglePlayServicesUtil.getErrorDialog(result.getErrorCode(), activity, 0).show();
-                                    return;
-                                }
-
-                                if (!authInProgress) {
+                            public void onConnectionFailed(final ConnectionResult connectionResult) {
+                                if (connectionResult.hasResolution()) {
+                                    // This problem can be fixed. So let's try to fix it.
                                     try {
-                                        display.show("Attempting to resolve failed connection");
-                                        authInProgress = true;
-                                        result.startResolutionForResult(activity, REQUEST_OAUTH);
+                                        // launch appropriate UI flow (which might, for example, be the
+                                        // sign-in flow)
+                                        connectionResult.startResolutionForResult(activity, REQUEST_OAUTH);
                                     } catch (IntentSender.SendIntentException e) {
-                                        display.show("Exception while starting resolution activity: " + e.getMessage());
+                                        // Try connecting again
+                                        client.connect();
                                     }
+                                } else {
+                                    GooglePlayServicesUtil.getErrorDialog(connectionResult.getErrorCode(), activity, 0).show();
                                 }
                             }
                         }
@@ -101,17 +99,13 @@ public class Client {
         return client;
     }
 
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == REQUEST_OAUTH) {
-            display.log("onActivityResult: REQUEST_OAUTH");
-            authInProgress = false;
-            if (resultCode == Activity.RESULT_OK) {
-                // Make sure the app is not already connected or attempting to connect
-                if (!client.isConnecting() && !client.isConnected()) {
-                    display.log("onActivityResult: client.connect()");
-                    client.connect();
-                }
-            }
-        }
+
+    public boolean isConnected()
+    {
+        return client.isConnected();
+    }
+    public boolean isConnecting()
+    {
+        return client.isConnecting();
     }
 }

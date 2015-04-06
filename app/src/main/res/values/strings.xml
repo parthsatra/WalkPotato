@@ -12,5 +12,7 @@
     <string name="title_activity_blocked_screen">BlockedScreenActivity</string>
 
     <string name="hello_world">Hello world!</string>
+    <string name="plus_sign_out">Switch Google+ account</string>
+    <string name="plus_disconnect">Disconnect from Google+</string>
 
 </resources>

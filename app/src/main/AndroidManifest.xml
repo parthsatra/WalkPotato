@@ -23,6 +23,10 @@
             android:name=".UI.backgroundtasks.LogReaderService"
             android:enabled="true"
             android:exported="true"></service>
+        <service
+            android:name=".UI.fitlib.History"
+            android:enabled="true"
+            android:exported="true"></service>
     </application>
 
 </manifest>

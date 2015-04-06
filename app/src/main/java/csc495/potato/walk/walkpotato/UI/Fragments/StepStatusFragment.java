@@ -112,10 +112,10 @@ public class StepStatusFragment extends Fragment {
                 : numPotatoesBurned + " potatoes");
 
         mPieChart.clearChart();
-        sliceGoal = new PieModel("", stepsTakenToday, Color.parseColor("#F38630"));
-        mPieChart.addPieSlice(sliceGoal);
-        sliceCurrent=new PieModel("", goalSteps - stepsTakenToday, Color.parseColor("#E0E4CC"));
+        sliceCurrent = new PieModel("", stepsTakenToday, Color.parseColor("#F38630"));
         mPieChart.addPieSlice(sliceCurrent);
+        sliceGoal=new PieModel("", goalSteps - stepsTakenToday, Color.parseColor("#E0E4CC"));
+        mPieChart.addPieSlice(sliceGoal);
 
         mPieChart.startAnimation();
 

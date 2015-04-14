@@ -41,4 +41,5 @@ dependencies {
     compile 'com.github.gabrielemariotti.cards:cardslib-extra-staggeredgrid:2.0.1'
     compile 'com.github.gabrielemariotti.cards:cardslib-extra-dragdrop:2.0.1'
     compile 'org.immutables:gson:2.0.2'
+    compile 'com.google.android.gms:play-services:6.5.+'
 }

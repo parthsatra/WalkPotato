@@ -15,7 +15,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 import csc495.potato.walk.walkpotato.R;
 import csc495.potato.walk.walkpotato.UI.Fragments.BlockedAppFragment;
@@ -26,8 +25,8 @@ import csc495.potato.walk.walkpotato.UI.NavDrawer.NavigationDrawerFragment;
 import csc495.potato.walk.walkpotato.UI.backgroundtasks.LogReaderService;
 import csc495.potato.walk.walkpotato.UI.fitlib.Client;
 import csc495.potato.walk.walkpotato.UI.fitlib.History;
-import csc495.potato.walk.walkpotato.UI.fitlib.Sensors;
 import csc495.potato.walk.walkpotato.UI.fitlib.Recording;
+import csc495.potato.walk.walkpotato.UI.fitlib.Sensors;
 import csc495.potato.walk.walkpotato.UI.fitlib.common.Display;
 
 
@@ -174,7 +173,7 @@ public class MainActivity extends ActionBarActivity
         // Set up the drawer.
         mNavigationDrawerFragment.setup(R.id.fragment_drawer, (DrawerLayout) findViewById(R.id.drawer), mToolbar);
         // populate the navigation drawer
-        mNavigationDrawerFragment.setUserData("Potato Doe", "potatodoe@doe.com", BitmapFactory.decodeResource(getResources(), R.drawable.avatar));
+        mNavigationDrawerFragment.setUserData("Potato Doe", "potatodoe@doe.com", BitmapFactory.decodeResource(getResources(), R.drawable.mascot));
         mNavigationDrawerFragment.closeDrawer();
     }
     private void buildFitnessClient()

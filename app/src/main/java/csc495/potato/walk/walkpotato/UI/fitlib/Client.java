@@ -1,7 +1,6 @@
 package csc495.potato.walk.walkpotato.UI.fitlib;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.content.IntentSender;
 import android.os.Bundle;
 

@@ -87,6 +87,7 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" exported="" name="cardslib-cards-2.0.1" level="project" />
     <orderEntry type="library" exported="" name="cardview-v7-21.0.0" level="project" />
+    <orderEntry type="library" exported="" name="play-services-6.5.87" level="project" />
     <orderEntry type="library" exported="" name="cardslib-extra-staggeredgrid-2.0.1" level="project" />
     <orderEntry type="library" exported="" name="support-v4-21.0.3" level="project" />
     <orderEntry type="library" exported="" name="lib-manipulation-3.1.0" level="project" />

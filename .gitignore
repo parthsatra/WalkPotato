@@ -4,6 +4,9 @@
 
 # Files for the Dalvik VM
 *.dex
+*.iml
+
+.idea/
 
 # Java class files
 *.class
@@ -24,3 +27,5 @@ proguard/
 
 # Log Files
 *.log
+
+

@@ -66,6 +66,13 @@ public class RewardsFragment extends Fragment {
         getView().setBackgroundColor(Color.parseColor("#E0E4CC"));
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        mListView = (CardListView) getActivity().findViewById(R.id.carddemo_list_gplaycard);
+        initCards();
+    }
+
 
     private void initCards() {
 

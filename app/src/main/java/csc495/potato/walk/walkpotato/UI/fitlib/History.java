@@ -1,7 +1,9 @@
 package csc495.potato.walk.walkpotato.UI.fitlib;
 
 import android.app.IntentService;
+import android.app.Service;
 import android.content.Intent;
+import android.os.IBinder;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
@@ -26,7 +28,7 @@ import java.util.concurrent.TimeUnit;
 import csc495.potato.walk.walkpotato.UI.fitlib.common.Display;
 
 
-public class History extends IntentService{
+public class History extends Service{
     private static GoogleApiClient client;
     private static final Display display = new Display(History.class.getName()) {
         @Override
@@ -46,10 +48,10 @@ public class History extends IntentService{
     public static final String FIT_NOTIFY_INTENT = "fitStatusUpdateIntent";
     public static final String FIT_EXTRA_CONNECTION_MESSAGE = "fitFirstConnection";
     public static final String FIT_EXTRA_NOTIFY_FAILED_STATUS_CODE = "fitExtraFailedStatusCode";
+    private  LocalBroadcastManager broadcaster;
 
     public History()
     {
-        super("HistoryService");
     }
 
     public void readWeekBefore(Date date) {
@@ -75,6 +77,31 @@ public class History extends IntentService{
 
         return read(startTime, endTime);
     }
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+
+        //Log.d("HistoryService","History Service onCreate");
+
+        //sendMessage(steps);
+    }
+
+    @Override
+    public IBinder onBind(Intent intent) {
+        return null;
+    }
+
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+
+        broadcaster = LocalBroadcastManager.getInstance(this);
+        //if(History.client!=null)
+        currentDay(new Date());
+        stopSelf();
+        return START_NOT_STICKY;
+    }
+
     public int read(long start, long end) {
         final DateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");// SimpleDateFormat.getDateInstance();
         display.show("history reading range: " + dateFormat.format(start) + " - " + dateFormat.format(end));
@@ -100,9 +127,11 @@ public class History extends IntentService{
                             for (DataPoint dp : dataSet.getDataPoints()) {
                                 for(Field field : dp.getDataType().getFields()) {
                                     History.stepsTakenToday+= dp.getValue(field).asInt();
-                                    Log.d("History",dp.getValue(field).asInt()+"" );
+                                    Log.d("History",dp.getValue(field).asInt()+"steps" );
                                 }
                             }
+                            sendMessage(History.stepsTakenToday);
+
                         }
                     }
                 } else if (dataReadResult.getDataSets().size() > 0) {
@@ -123,12 +152,24 @@ public class History extends IntentService{
         return History.stepsTakenToday;
     }
 
-    @Override
-    protected void onHandleIntent(Intent intent) {
-        Log.d("","In history dont think the service is working");
-        int type = intent.getIntExtra(SERVICE_REQUEST_TYPE,-1);
-        if(type==TYPE_GET_STEP_TODAY_DATA){
-            int steps = currentDay(new Date());
+    /* @Override
+     protected void onHandleIntent(Intent intent) {
+         Log.d("","In history dont think the service is working");
+         int type = intent.getIntExtra(SERVICE_REQUEST_TYPE,-1);
+         if(type==TYPE_GET_STEP_TODAY_DATA){
+             int steps = currentDay(new Date());
+             Intent intent1 = new Intent(HISTORY_INTENT);
+             // You can also include some extra data.
+             intent1.putExtra(HISTORY_EXTRA_STEPS_TODAY, steps);
+
+             LocalBroadcastManager.getInstance(this).sendBroadcast(intent1);
+         }
+     }*/
+    public void sendMessage(int steps)
+    {
+        Log.d("SendMessage", "Inside send message method"+steps);
+        if(steps>0)
+        {
             Intent intent1 = new Intent(HISTORY_INTENT);
             // You can also include some extra data.
             intent1.putExtra(HISTORY_EXTRA_STEPS_TODAY, steps);

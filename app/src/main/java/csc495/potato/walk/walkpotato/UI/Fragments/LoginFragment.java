@@ -1,25 +1,20 @@
 package csc495.potato.walk.walkpotato.UI.Fragments;
 
 import android.app.Activity;
+import android.app.Fragment;
 import android.app.PendingIntent;
 import android.content.Context;
-import android.content.IntentSender;
 import android.net.Uri;
 import android.os.Bundle;
-import android.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
+import android.widget.ImageView;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
-import com.google.android.gms.common.Scopes;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.common.api.Scope;
-import com.google.android.gms.fitness.Fitness;
 
 import csc495.potato.walk.walkpotato.R;
 import csc495.potato.walk.walkpotato.UI.MainActivity;
@@ -85,6 +80,9 @@ public class LoginFragment extends Fragment{
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         final View v = inflater.inflate(R.layout.fragment_login, container, false);
+        ImageView avatarContainer = (ImageView) v.findViewById(R.id.imgMascot);
+        avatarContainer.setImageResource(R.drawable.mascot);
+
         mPlusSignInButton = (SignInButton)v.findViewById(R.id.plus_sign_in_button);
         if (supportsGooglePlayServices()) {
             // Set a listener to connect the user when the G+ button is clicked.

@@ -14,5 +14,8 @@
     <string name="hello_world">Hello world!</string>
     <string name="plus_sign_out">Switch Google+ account</string>
     <string name="plus_disconnect">Disconnect from Google+</string>
+    <string name="header_title_subtitle_swipe">A list with the swipe and undo actions</string>
+    <string name="header_title_group3">List,Grid and RecyclerView</string>
+    <string name="carddemo_title_list_gplaycard_undo">List with undo</string>
 
 </resources>

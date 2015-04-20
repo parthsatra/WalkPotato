@@ -24,3 +24,8 @@ proguard/
 
 # Log Files
 *.log
+
+
+#IDEA Files (User Workspace specific)
+.idea/
+*.iml

@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import csc495.potato.walk.walkpotato.R;
 import csc495.potato.walk.walkpotato.UI.Fragments.BlockedAppFragment;
 import csc495.potato.walk.walkpotato.UI.Fragments.LoginFragment;
+import csc495.potato.walk.walkpotato.UI.Fragments.RewardsFragment;
 import csc495.potato.walk.walkpotato.UI.Fragments.StepStatusFragment;
 import csc495.potato.walk.walkpotato.UI.NavDrawer.NavigationDrawerCallbacks;
 import csc495.potato.walk.walkpotato.UI.NavDrawer.NavigationDrawerFragment;
@@ -115,7 +116,14 @@ public class MainActivity extends ActionBarActivity
                     transaction.commit();
 
                     break;
-                case 2: //rewards //todo
+                case 2:
+                    fragment = getFragmentManager().findFragmentById(R.id.rewards);
+                    if (fragment == null) {
+                        fragment = new RewardsFragment();
+                    }
+                    transaction.replace(R.id.container, fragment);
+                    transaction.addToBackStack(null);
+                    transaction.commit();
                     break;
                 case 3: //settings //todo
                     break;

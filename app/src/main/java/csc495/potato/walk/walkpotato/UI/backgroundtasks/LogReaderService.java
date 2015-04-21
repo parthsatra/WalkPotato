@@ -12,6 +12,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import csc495.potato.walk.walkpotato.UI.Fragments.StepStatusFragment;
+
 public class LogReaderService extends Service implements Runnable {
 
     private Thread thread = null;
@@ -54,15 +56,17 @@ public class LogReaderService extends Service implements Runnable {
                         SharedPreferences blockedApps = this.getSharedPreferences("blocked_apps", Context.MODE_PRIVATE);
                         Set<String> blockedAppSet = blockedApps.getStringSet("app_list", new HashSet<String>());
                         if (blockedAppSet.contains(pi.pkgList[0].trim())) {
-                            Intent launchIntent = getPackageManager().getLaunchIntentForPackage("csc495.potato.walk.walkpotato");
-                            launchIntent.addFlags(Intent.FLAG_ACTIVITY_TASK_ON_HOME);
-                            startActivity(launchIntent);
+                            if(StepStatusFragment.getStepsTakenToday() > 5000) {
+                                Intent launchIntent = getPackageManager().getLaunchIntentForPackage("csc495.potato.walk.walkpotato");
+                                launchIntent.addFlags(Intent.FLAG_ACTIVITY_TASK_ON_HOME);
+                                startActivity(launchIntent);
+                            }
                         }
                         break;
                     }
                 }
 
-                //Modif this to control how often the app stack is polled!
+                //Modify this to control how often the app stack is polled!
                 Thread.sleep(250);
             } catch (Exception e) {
                 Log.e("Service Error : ", e.getMessage());

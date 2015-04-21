@@ -26,7 +26,7 @@ import java.util.concurrent.TimeUnit;
 import csc495.potato.walk.walkpotato.UI.fitlib.common.Display;
 
 
-public class History extends IntentService{
+public class History extends IntentService {
     private static GoogleApiClient client;
     private static final Display display = new Display(History.class.getName()) {
         @Override

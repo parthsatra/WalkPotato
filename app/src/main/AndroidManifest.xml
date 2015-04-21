@@ -22,11 +22,20 @@
         <service
             android:name=".UI.backgroundtasks.LogReaderService"
             android:enabled="true"
-            android:exported="true"></service>
+            android:exported="true" />
         <service
             android:name=".UI.fitlib.History"
             android:enabled="true"
-            android:exported="true"></service>
+            android:exported="true" />
+
+        <receiver
+            android:name=".UI.Receivers.ResetReceiver"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="reset_prefs" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

@@ -14,8 +14,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import java.util.ArrayList;
-
 import csc495.potato.walk.walkpotato.R;
 import csc495.potato.walk.walkpotato.UI.Fragments.BlockedAppFragment;
 import csc495.potato.walk.walkpotato.UI.Fragments.LoginFragment;
@@ -34,6 +32,7 @@ import csc495.potato.walk.walkpotato.UI.fitlib.common.Display;
 public class MainActivity extends ActionBarActivity
         implements NavigationDrawerCallbacks, BlockedAppFragment.OnFragmentInteractionListener {
 
+    private static final int REQUEST_OAUTH = 1;
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
      */
@@ -45,7 +44,6 @@ public class MainActivity extends ActionBarActivity
     private Sensors sensors;
     private Recording recording;
     private History history;
-    private static final int REQUEST_OAUTH = 1;
     private boolean authInProgress = false;
     private Display display = new Display(MainActivity.class.getName()) {
         @Override
@@ -64,7 +62,7 @@ public class MainActivity extends ActionBarActivity
         setSupportActionBar(mToolbar);
         buildFitnessClient();
         if(getSharedPreferences("walkpotato_signon", Context.MODE_PRIVATE)
-                .getBoolean("autosignin", false)&&!client.isConnected())
+                .getBoolean("autosignin", false) && !client.isConnected())
         {
             client.connect();
             initializeNavDrawer();

@@ -27,7 +27,7 @@ import csc495.potato.walk.walkpotato.UI.fitlib.History;
  * create an instance of this fragment.
  */
 public class StepStatusFragment extends Fragment {
-    private static final int goalSteps = 20000;
+    private static final int goalSteps = 1000;
     private static int stepsTakenToday = 0;
     private BroadcastReceiver stepUpdateReceiver = new BroadcastReceiver() {
         @Override
@@ -41,6 +41,8 @@ public class StepStatusFragment extends Fragment {
             }
         }
     };
+    private static int entertainmentTime = 600;
+    private static int MAX_ENTERTAINMENT_TIME = 600;
     private final int NUM_STEPS_PER_CAL = 20;
     private final int NUM_CALS_PER_POTATO = 138;
     private PieChart mPieChart;
@@ -79,6 +81,22 @@ public class StepStatusFragment extends Fragment {
 
     public static int getGoalSteps() {
         return goalSteps;
+    }
+
+    public static int getEntertainmentTime() {
+        return entertainmentTime;
+    }
+
+    public static void setEntertainmentTime(int time) {
+        entertainmentTime -= time;
+    }
+
+    public static void clearEntertainmentTime() {
+        entertainmentTime = 0;
+    }
+
+    public static void resetTimer() {
+        entertainmentTime = MAX_ENTERTAINMENT_TIME;
     }
 
     @Override
@@ -178,6 +196,5 @@ public class StepStatusFragment extends Fragment {
 
     private int calculatePotatoesBurned(int stepsTaken) {
         return (stepsTaken / NUM_STEPS_PER_CAL) / NUM_CALS_PER_POTATO;
-
     }
 }

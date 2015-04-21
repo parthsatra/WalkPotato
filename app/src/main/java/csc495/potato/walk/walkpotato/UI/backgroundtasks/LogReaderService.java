@@ -2,6 +2,7 @@ package csc495.potato.walk.walkpotato.UI.backgroundtasks;
 
 import android.app.ActivityManager;
 import android.app.AlarmManager;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
@@ -11,6 +12,8 @@ import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.IBinder;
 import android.os.Message;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.TaskStackBuilder;
 import android.util.Log;
 
 import java.util.Calendar;
@@ -18,8 +21,11 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
+import csc495.potato.walk.walkpotato.R;
 import csc495.potato.walk.walkpotato.UI.Fragments.StepStatusFragment;
+import csc495.potato.walk.walkpotato.UI.MainActivity;
 
 public class LogReaderService extends Service implements Runnable {
 
@@ -28,6 +34,8 @@ public class LogReaderService extends Service implements Runnable {
     private SharedPreferences sPref;
     private SharedPreferences curOpen;
     private Handler handler;
+    private NotificationManager mNotificationManager;
+    private long timeStarted = System.currentTimeMillis();
 
     public LogReaderService() {
     }
@@ -42,6 +50,10 @@ public class LogReaderService extends Service implements Runnable {
     public int onStartCommand(Intent intent, int flags, int startId) {
 //        Toast.makeText(this, "service starting", Toast.LENGTH_SHORT).show();
         context = this;
+
+        mNotificationManager =
+                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+
         thread = new Thread(this);
         thread.start();
 
@@ -87,18 +99,37 @@ public class LogReaderService extends Service implements Runnable {
                         SharedPreferences blockedApps = this.getSharedPreferences("blocked_apps", Context.MODE_PRIVATE);
                         Set<String> blockedAppSet = blockedApps.getStringSet("app_list", new HashSet<String>());
                         if (blockedAppSet.contains(pi.pkgList[0].trim())) {
+
+                            Message message = new Message();
+                            message.what = 1;
+                            message.obj = pi.pkgList[0].trim();
+                            handler.sendMessage(message);
+
                             if (StepStatusFragment.getStepsTakenToday() < StepStatusFragment.getGoalSteps()) {
-                                Message message = new Message();
-                                message.what = 1;
-                                message.obj = pi.pkgList[0].trim();
-                                handler.sendMessage(message);
-                                Intent launchIntent = getPackageManager().getLaunchIntentForPackage("csc495.potato.walk.walkpotato");
-                                launchIntent.addFlags(Intent.FLAG_ACTIVITY_TASK_ON_HOME);
-                                startActivity(launchIntent);
+
+                                double timeLeftPerc = (double) StepStatusFragment.getStepsTakenToday() / StepStatusFragment.getGoalSteps();
+
+                                if (StepStatusFragment.getEntertainmentTime() <= 0 || timeLeftPerc == 0) {
+                                    Intent launchIntent = getPackageManager().getLaunchIntentForPackage("csc495.potato.walk.walkpotato");
+                                    launchIntent.addFlags(Intent.FLAG_ACTIVITY_TASK_ON_HOME);
+                                    startActivity(launchIntent);
+                                } else {
+                                    createNotification(timeLeftPerc);
+                                }
+                            } else {
+                                StepStatusFragment.resetTimer();
                             }
+
+                            break;
                         }
-                        break;
                     }
+
+                    Message message = new Message();
+                    message.what = 2;
+                    handler.sendMessage(message);
+                    mNotificationManager.cancel(45);
+                    StepStatusFragment.setEntertainmentTime((int) ((System.currentTimeMillis() - timeStarted) / 1000));
+                    timeStarted = System.currentTimeMillis();
                 }
 
                 //Modify this to control how often the app stack is polled!
@@ -137,9 +168,75 @@ public class LogReaderService extends Service implements Runnable {
                             editor.commit();
                         }
                     }
+                    break;
+
+                    case 2: {
+                        Map<String, ?> lastMap = curOpen.getAll();
+                        SharedPreferences.Editor editor = curOpen.edit();
+                        SharedPreferences.Editor usageEditor = sPref.edit();
+
+                        for (String appName : lastMap.keySet()) {
+                            usageEditor.putLong(appName,
+                                    sPref.getLong(appName, 0L)
+                                            + (System.currentTimeMillis() - curOpen.getLong(appName, 0L)));
+                            editor.remove(appName);
+                        }
+
+                        editor.commit();
+                        usageEditor.commit();
+                    }
+                    break;
                 }
                 return false;
             }
         });
+    }
+
+    private void createNotification(double timeLeftPerc) {
+
+        long percTime = (long) (timeLeftPerc * StepStatusFragment.getEntertainmentTime());
+        long diff = System.currentTimeMillis() - timeStarted;
+        long timeLeftNow = (percTime - (diff / 1000)) * 1000;
+
+        if (timeLeftNow == 0)
+            StepStatusFragment.clearEntertainmentTime();
+
+        NotificationCompat.Builder mBuilder =
+                new NotificationCompat.Builder(this)
+                        .setSmallIcon(R.drawable.ic_launcher)
+                        .setContentTitle(convertTime(timeLeftNow))
+                        .setContentText("Achieve goal to reset the timer!");
+
+        // Creates an explicit intent for an Activity in your app
+        Intent resultIntent = new Intent(this, MainActivity.class);
+
+        // The stack builder object will contain an artificial back stack for the
+        // started Activity.
+        // This ensures that navigating backward from the Activity leads out of
+        // your application to the Home screen.
+        TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
+
+        // Adds the back stack for the Intent (but not the Intent itself)
+        stackBuilder.addParentStack(MainActivity.class);
+
+        // Adds the Intent that starts the Activity to the top of the stack
+        stackBuilder.addNextIntent(resultIntent);
+        PendingIntent resultPendingIntent =
+                stackBuilder.getPendingIntent(
+                        0,
+                        PendingIntent.FLAG_UPDATE_CURRENT
+                );
+        mBuilder.setContentIntent(resultPendingIntent);
+
+        // mId allows you to update the notification later on.
+        mNotificationManager.notify(45, mBuilder.build());
+    }
+
+    private String convertTime(long millis) {
+        return String.format("%d min, %d sec",
+                TimeUnit.MILLISECONDS.toMinutes(millis),
+                TimeUnit.MILLISECONDS.toSeconds(millis) -
+                        TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millis))
+        );
     }
 }

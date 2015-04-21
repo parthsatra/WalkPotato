@@ -64,6 +64,7 @@ public class StepStatusFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
     }
+
     private void handleGetStepsButton() {
         //Start Service and wait for broadcast
 

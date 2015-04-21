@@ -195,6 +195,7 @@ public class MainActivity extends ActionBarActivity
                         getSharedPreferences("walkpotato_signon", Context.MODE_PRIVATE).edit()
                                 .putBoolean("autosignin", true).apply();
                         History.setClient(client.getClient());
+
                         if(mNavigationDrawerFragment==null)initializeNavDrawer();
                         Fragment fragment = getFragmentManager().findFragmentById(R.id.step_status);
                         if (fragment == null) {
@@ -238,7 +239,7 @@ public class MainActivity extends ActionBarActivity
                     }
                 });
     }
-    private void initSensors() {
+    /*private void initSensors() {
         display.show("init sensors");
         sensors = new Sensors(client.getClient(),
                 new Sensors.DatasourcesListener() {
@@ -261,7 +262,7 @@ public class MainActivity extends ActionBarActivity
                         //add(FitPagerAdapter.FragmentIndex.SENSORS, msg);
                     }
                 });
-    }
+    }*/
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_OAUTH) {
             display.log("onActivityResult: REQUEST_OAUTH");

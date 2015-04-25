@@ -1,6 +1,7 @@
 package csc495.potato.walk.walkpotato.UI.Dialogs;
 
 import android.app.DialogFragment;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
@@ -13,11 +14,11 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.app.ProgressDialog;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import csc495.potato.walk.walkpotato.R;
@@ -121,6 +122,8 @@ public class AppSelectDialog extends DialogFragment implements
                     appList.add(app);
                 }
             }
+
+            Collections.sort(appList, new ApplicationInfo.DisplayNameComparator(context.getPackageManager()));
 
             appAdapter = new ApplicationAdapter(getActivity(),
                     R.layout.app_list_item, appList);

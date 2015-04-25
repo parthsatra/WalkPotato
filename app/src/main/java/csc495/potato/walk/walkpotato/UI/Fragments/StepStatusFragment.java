@@ -27,22 +27,12 @@ import csc495.potato.walk.walkpotato.UI.fitlib.History;
  * create an instance of this fragment.
  */
 public class StepStatusFragment extends Fragment {
-    private static final int goalSteps = 1000;
+    private static final int goalSteps = 10000;
     private static int stepsTakenToday = 0;
-    private BroadcastReceiver stepUpdateReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            Log.d("Total Steps service", "Insert something here");
-            if (intent.hasExtra(History.HISTORY_EXTRA_STEPS_TODAY)) {
 
-                stepsTakenToday = intent.getIntExtra(History.HISTORY_EXTRA_STEPS_TODAY, 0);
-                Log.d("Total Steps", "" + stepsTakenToday);
-                updatePie();
-            }
-        }
-    };
     private static int entertainmentTime = 600;
-    private static int MAX_ENTERTAINMENT_TIME = 600;
+    private static int usedUpTime = 0;
+    public static int MAX_ENTERTAINMENT_TIME = 600;
     private final int NUM_STEPS_PER_CAL = 20;
     private final int NUM_CALS_PER_POTATO = 138;
     private PieChart mPieChart;
@@ -56,6 +46,19 @@ public class StepStatusFragment extends Fragment {
         //this.context = getActivity().getApplicationContext();
 
     }
+
+    private BroadcastReceiver stepUpdateReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            Log.d("Total Steps service", "Insert something here");
+            if (intent.hasExtra(History.HISTORY_EXTRA_STEPS_TODAY)) {
+
+                stepsTakenToday = intent.getIntExtra(History.HISTORY_EXTRA_STEPS_TODAY, 0);
+                Log.d("Total Steps", "" + stepsTakenToday);
+                updatePie();
+            }
+        }
+    };
 
     /**
      * Use this factory method to create a new instance of
@@ -87,8 +90,8 @@ public class StepStatusFragment extends Fragment {
         return entertainmentTime;
     }
 
-    public static void setEntertainmentTime(int time) {
-        entertainmentTime -= time;
+    public static void setEntertainmentTime() {
+        entertainmentTime = MAX_ENTERTAINMENT_TIME - usedUpTime;
     }
 
     public static void clearEntertainmentTime() {
@@ -97,6 +100,14 @@ public class StepStatusFragment extends Fragment {
 
     public static void resetTimer() {
         entertainmentTime = MAX_ENTERTAINMENT_TIME;
+    }
+
+    public static int getUsedUpTime() {
+        return usedUpTime;
+    }
+
+    public static void setUsedUpTime(int time) {
+        usedUpTime += time;
     }
 
     @Override

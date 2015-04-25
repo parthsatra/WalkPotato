@@ -103,13 +103,14 @@ public class LogReaderService extends Service implements Runnable {
                             Message message = new Message();
                             message.what = 1;
                             message.obj = pi.pkgList[0].trim();
-                            handler.sendMessage(message);
+                            //handler.sendMessage(message);
 
                             if (StepStatusFragment.getStepsTakenToday() < StepStatusFragment.getGoalSteps()) {
 
                                 double timeLeftPerc = (double) StepStatusFragment.getStepsTakenToday() / StepStatusFragment.getGoalSteps();
 
-                                if (StepStatusFragment.getEntertainmentTime() <= 0 || timeLeftPerc == 0) {
+                                if (StepStatusFragment.getEntertainmentTime() <= 0
+                                        || timeLeftPerc == 0) {
                                     Intent launchIntent = getPackageManager().getLaunchIntentForPackage("csc495.potato.walk.walkpotato");
                                     launchIntent.addFlags(Intent.FLAG_ACTIVITY_TASK_ON_HOME);
                                     startActivity(launchIntent);
@@ -126,9 +127,10 @@ public class LogReaderService extends Service implements Runnable {
 
                     Message message = new Message();
                     message.what = 2;
-                    handler.sendMessage(message);
+                    //handler.sendMessage(message);
                     mNotificationManager.cancel(45);
-                    StepStatusFragment.setEntertainmentTime((int) ((System.currentTimeMillis() - timeStarted) / 1000));
+                    StepStatusFragment.setUsedUpTime((int) ((System.currentTimeMillis() - timeStarted) / 1000));
+                    StepStatusFragment.setEntertainmentTime();
                     timeStarted = System.currentTimeMillis();
                 }
 
@@ -154,7 +156,6 @@ public class LogReaderService extends Service implements Runnable {
                             SharedPreferences.Editor usageEditor = sPref.edit();
 
                             for (String appName : lastMap.keySet()) {
-                                Log.e("TWERP", appName + " 1");
                                 usageEditor.putLong(appName,
                                         sPref.getLong(appName, 0L)
                                                 + (System.currentTimeMillis() - curOpen.getLong(appName, 0L)));
@@ -194,7 +195,7 @@ public class LogReaderService extends Service implements Runnable {
 
     private void createNotification(double timeLeftPerc) {
 
-        long percTime = (long) (timeLeftPerc * StepStatusFragment.getEntertainmentTime());
+        long percTime = (long) ((timeLeftPerc * StepStatusFragment.MAX_ENTERTAINMENT_TIME) - StepStatusFragment.getUsedUpTime());
         long diff = System.currentTimeMillis() - timeStarted;
         long timeLeftNow = (percTime - (diff / 1000)) * 1000;
 

@@ -24,6 +24,7 @@ import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 import csc495.potato.walk.walkpotato.R;
+import csc495.potato.walk.walkpotato.UI.Fragments.SettingsFragment;
 import csc495.potato.walk.walkpotato.UI.Fragments.StepStatusFragment;
 import csc495.potato.walk.walkpotato.UI.MainActivity;
 
@@ -91,6 +92,9 @@ public class LogReaderService extends Service implements Runnable {
     @Override
     public void run() {
         ActivityManager mActivityManager = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
+        SharedPreferences prefs = getSharedPreferences("walkpotato", Context.MODE_MULTI_PROCESS);
+        int goalSteps = prefs.getInt("goal", SettingsFragment.DEFAULT_GOAL);
+
         while (true)
             try {
                 final List<ActivityManager.RunningAppProcessInfo> pis = mActivityManager.getRunningAppProcesses();
@@ -105,9 +109,9 @@ public class LogReaderService extends Service implements Runnable {
                             message.obj = pi.pkgList[0].trim();
                             //handler.sendMessage(message);
 
-                            if (StepStatusFragment.getStepsTakenToday() < StepStatusFragment.getGoalSteps()) {
+                            if (StepStatusFragment.getStepsTakenToday() < goalSteps) {
 
-                                double timeLeftPerc = (double) StepStatusFragment.getStepsTakenToday() / StepStatusFragment.getGoalSteps();
+                                double timeLeftPerc = (double) StepStatusFragment.getStepsTakenToday() / goalSteps;
 
                                 if (StepStatusFragment.getEntertainmentTime() <= 0
                                         || timeLeftPerc == 0) {

@@ -20,7 +20,7 @@ import csc495.potato.walk.walkpotato.R;
  * Created by Kenan on 5/4/2015.
  */
 public class SettingsFragment extends PreferenceFragment implements OnPreferenceClickListener {
-    final static int DEFAULT_GOAL = 10000;
+    final public static int DEFAULT_GOAL = 10000;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

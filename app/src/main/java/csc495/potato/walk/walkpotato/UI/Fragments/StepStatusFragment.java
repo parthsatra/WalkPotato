@@ -28,7 +28,6 @@ import csc495.potato.walk.walkpotato.UI.fitlib.History;
  * create an instance of this fragment.
  */
 public class StepStatusFragment extends Fragment {
-    private static final int goalSteps = 10000;
     private static int stepsTakenToday = 0;
 
     private static int entertainmentTime = 600;
@@ -84,8 +83,10 @@ public class StepStatusFragment extends Fragment {
         StepStatusFragment.stepsTakenToday = stepsTakenToday;
     }
 
-    public static int getGoalSteps() {
-        return goalSteps;
+    public int getGoalSteps() {
+        SharedPreferences prefs =
+                getActivity().getSharedPreferences("walkpotato", Context.MODE_MULTI_PROCESS);
+        return prefs.getInt("goal", SettingsFragment.DEFAULT_GOAL);
     }
 
     public static int getEntertainmentTime() {
@@ -132,14 +133,14 @@ public class StepStatusFragment extends Fragment {
         // todayOffset might still be Integer.MIN_VALUE on first start
         //int steps_today = Math.max(todayOffset + since_boot, 0);
         sliceCurrent.setValue(stepsTakenToday);
-        if (goalSteps - stepsTakenToday > 0) {
+        if (getGoalSteps() - stepsTakenToday > 0) {
             // goal not reached yet
             if (mPieChart.getData().size() == 1) {
                 // can happen if the goal value was changed: old goal value was
                 // reached but now there are some steps missing for the new goal
                 mPieChart.addPieSlice(sliceGoal);
             }
-            sliceGoal.setValue(goalSteps - stepsTakenToday);
+            sliceGoal.setValue(getGoalSteps() - stepsTakenToday);
         } else {
             // goal reached
             mPieChart.clearChart();
@@ -158,8 +159,6 @@ public class StepStatusFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         final View v = inflater.inflate(R.layout.fragment_step_status, container, false);
-        SharedPreferences prefs =
-                getActivity().getSharedPreferences("walkpotato", Context.MODE_MULTI_PROCESS);
 
         //int stepsTaken = 15000;
         //int goalSteps = 20000;
@@ -176,7 +175,7 @@ public class StepStatusFragment extends Fragment {
         mPieChart.clearChart();
         sliceCurrent = new PieModel("", stepsTakenToday, Color.parseColor("#F38630"));
         mPieChart.addPieSlice(sliceCurrent);
-        sliceGoal = new PieModel("", prefs.getInt("goal", SettingsFragment.DEFAULT_GOAL) - stepsTakenToday, Color.parseColor("#E0E4CC"));
+        sliceGoal = new PieModel("", getGoalSteps() - stepsTakenToday, Color.parseColor("#E0E4CC"));
         mPieChart.addPieSlice(sliceGoal);
 
         mPieChart.startAnimation();
@@ -215,8 +214,6 @@ public class StepStatusFragment extends Fragment {
     }
 
     private int calculatePotatoesBurned(int stepsTaken) {
-        SharedPreferences prefs =
-                getActivity().getSharedPreferences("walkpotato", Context.MODE_MULTI_PROCESS);
         return (stepsTaken / NUM_STEPS_PER_CAL) / NUM_CALS_PER_POTATO;
     }
 }

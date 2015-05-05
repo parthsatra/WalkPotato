@@ -5,10 +5,6 @@
     android:id="@+id/step_status"
     android:background="#FFFFFF">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView android:layout_width="match_parent" android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
-
     <org.eazegraph.lib.charts.PieChart
         xmlns:eaze="http://schemas.android.com/apk/res-auto"
         android:id="@+id/graph"

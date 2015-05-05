@@ -11,6 +11,7 @@
     <color name="myPrimaryColor">#69D2E7</color>
     <color name="myPrimaryDarkColor">#ff52a3b4</color>
     <color name="mySecondaryColor">#E0E4CC</color>
+    <color name="mySecondaryDarkColor">#ff979a85</color>
     <color name="myAccentColor">#F38630</color>
     <color name="myDrawerBackground">#FFF</color>
     <color name="myWindowBackground">#FFF</color>

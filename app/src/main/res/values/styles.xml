@@ -7,9 +7,13 @@
         <item name="colorPrimaryDark">@color/myPrimaryDarkColor</item>
         <item name="colorAccent">@color/myAccentColor</item>
         <item name="android:textColorPrimary">@color/myTextPrimaryColor</item>
+        <item name="android:textColorSecondary">@color/myPrimaryDarkColor</item>
+        <item name="android:textColorTertiary">@color/mySecondaryDarkColor</item>
         <item name="android:navigationBarColor">@color/myNavigationColor</item>
+        <item name="android:textColor">@color/myNavigationColor</item>
+        <item name="android:textAppearanceLarge">@style/SettingsTitle</item>
+        <item name="android:alertDialogTheme">@android:style/Theme.Holo.Light.Dialog</item>
         <item name="drawerArrowStyle">@style/DrawerArrowStyle</item>
-
 
         <item name="android:windowBackground">@color/myWindowBackground</item>
         <item name="android:windowContentTransitions">true</item>
@@ -25,4 +29,9 @@
         <item name="popupTheme">@style/ThemeOverlay.AppCompat.Light</item>
         <item name="theme">@style/ThemeOverlay.AppCompat.Dark.ActionBar</item>
     </style>
+
+    <style name="SettingsTitle" parent="@android:style/TextAppearance.Large">
+        <item name="android:textColor">@color/mySecondaryDarkColor</item>
+    </style>
+
 </resources>

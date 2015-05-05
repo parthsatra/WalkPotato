@@ -18,6 +18,7 @@ import csc495.potato.walk.walkpotato.R;
 import csc495.potato.walk.walkpotato.UI.Fragments.BlockedAppFragment;
 import csc495.potato.walk.walkpotato.UI.Fragments.LoginFragment;
 import csc495.potato.walk.walkpotato.UI.Fragments.RewardsFragment;
+import csc495.potato.walk.walkpotato.UI.Fragments.SettingsFragment;
 import csc495.potato.walk.walkpotato.UI.Fragments.StepStatusFragment;
 import csc495.potato.walk.walkpotato.UI.NavDrawer.NavigationDrawerCallbacks;
 import csc495.potato.walk.walkpotato.UI.NavDrawer.NavigationDrawerFragment;
@@ -123,7 +124,10 @@ public class MainActivity extends ActionBarActivity
                     transaction.addToBackStack(null);
                     transaction.commit();
                     break;
-                case 3: //settings //todo
+                case 3:
+                    getFragmentManager().beginTransaction()
+                            .replace(R.id.container, new SettingsFragment())
+                            .addToBackStack(null).commit();
                     break;
             }
         }

@@ -6,6 +6,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
@@ -38,6 +39,7 @@ public class StepStatusFragment extends Fragment {
     private PieChart mPieChart;
     private TextView stepsView;
     private TextView totalPotatoesView;
+    private int goal;
     //private Context context;
     private PieModel sliceGoal, sliceCurrent;
 
@@ -112,6 +114,10 @@ public class StepStatusFragment extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        LocalBroadcastManager.getInstance(getActivity().getApplicationContext()).registerReceiver(stepUpdateReceiver, new IntentFilter(History.HISTORY_INTENT));
+        Intent service = new Intent(getActivity(), History.class);
+        service.putExtra(History.SERVICE_REQUEST_TYPE, History.TYPE_GET_STEP_TODAY_DATA);
+        getActivity().startService(service);
         super.onCreate(savedInstanceState);
 
     }
@@ -152,6 +158,8 @@ public class StepStatusFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         final View v = inflater.inflate(R.layout.fragment_step_status, container, false);
+        SharedPreferences prefs =
+                getActivity().getSharedPreferences("walkpotato", Context.MODE_MULTI_PROCESS);
 
         //int stepsTaken = 15000;
         //int goalSteps = 20000;
@@ -168,7 +176,7 @@ public class StepStatusFragment extends Fragment {
         mPieChart.clearChart();
         sliceCurrent = new PieModel("", stepsTakenToday, Color.parseColor("#F38630"));
         mPieChart.addPieSlice(sliceCurrent);
-        sliceGoal = new PieModel("", goalSteps - stepsTakenToday, Color.parseColor("#E0E4CC"));
+        sliceGoal = new PieModel("", prefs.getInt("goal", SettingsFragment.DEFAULT_GOAL) - stepsTakenToday, Color.parseColor("#E0E4CC"));
         mPieChart.addPieSlice(sliceGoal);
 
         mPieChart.startAnimation();
@@ -181,10 +189,11 @@ public class StepStatusFragment extends Fragment {
 
     @Override
     public void onResume() {
-        LocalBroadcastManager.getInstance(getActivity().getApplicationContext()).registerReceiver(stepUpdateReceiver, new IntentFilter(History.HISTORY_INTENT));
-        Intent service = new Intent(getActivity(), History.class);
-        service.putExtra(History.SERVICE_REQUEST_TYPE, History.TYPE_GET_STEP_TODAY_DATA);
-        getActivity().startService(service);
+//        LocalBroadcastManager.getInstance(getActivity().getApplicationContext()).registerReceiver(stepUpdateReceiver, new IntentFilter(History.HISTORY_INTENT));
+//        Intent service = new Intent(getActivity(), History.class);
+//        service.putExtra(History.SERVICE_REQUEST_TYPE, History.TYPE_GET_STEP_TODAY_DATA);
+//        getActivity().startService(service);
+
         super.onResume();
     }
 
@@ -206,6 +215,8 @@ public class StepStatusFragment extends Fragment {
     }
 
     private int calculatePotatoesBurned(int stepsTaken) {
+        SharedPreferences prefs =
+                getActivity().getSharedPreferences("walkpotato", Context.MODE_MULTI_PROCESS);
         return (stepsTaken / NUM_STEPS_PER_CAL) / NUM_CALS_PER_POTATO;
     }
 }

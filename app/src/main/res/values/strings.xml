@@ -11,11 +11,13 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_blocked_screen">BlockedScreenActivity</string>
 
-    <string name="hello_world">Hello world!</string>
     <string name="plus_sign_out">Switch Google+ account</string>
     <string name="plus_disconnect">Disconnect from Google+</string>
     <string name="header_title_subtitle_swipe">A list with the swipe and undo actions</string>
     <string name="header_title_group3">List,Grid and RecyclerView</string>
     <string name="carddemo_title_list_gplaycard_undo">List with undo</string>
+    <string name="goal">Daily Goal</string>
+    <string name="goal_summary">Current goal: %,d steps</string>
+    <string name="set_goal">Set goal</string>
 
 </resources>

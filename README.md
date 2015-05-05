@@ -1,6 +1,6 @@
 # WalkPotato
 
-![Walk Potato Icon] {https://raw.githubusercontent.com/NCSUMobiles/Spring15-walkpotato/master/app/src/main/res/drawable/mascot.png}
+![Walk Potato Icon](https://raw.githubusercontent.com/NCSUMobiles/Spring15-walkpotato/master/app/src/main/res/drawable/mascot.png)
 
 # Tagline
 An App that strikes a balance between entertainment and fitness.

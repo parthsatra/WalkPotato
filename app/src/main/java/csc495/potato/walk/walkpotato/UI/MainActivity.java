@@ -165,7 +165,9 @@ public class MainActivity extends ActionBarActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            return true;
+            getFragmentManager().beginTransaction()
+                    .replace(R.id.container, new SettingsFragment())
+                    .addToBackStack(null).commit();
         }
 
         return super.onOptionsItemSelected(item);
